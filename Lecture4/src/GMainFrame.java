@@ -5,12 +5,15 @@ import java.awt.LayoutManager;
 import javax.swing.JFrame;
 
 public class GMainFrame extends JFrame {
+	//attributes
 	private static final long serialVersionUID = 1L;
-
+	//components
 	private GMenuBar menuBar;
 	private GToolBar toolBar;
 	private GDrawingPanel drawingPanel;// 메뉴바, 툴바, 드로잉 패널 보유
-
+	//associations
+	//...
+	
 	public GMainFrame() {
 		// attributes
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
