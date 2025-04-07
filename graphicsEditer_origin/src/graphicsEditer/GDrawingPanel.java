@@ -5,83 +5,82 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.Vector;
 
 import javax.swing.JPanel;
 
 public class GDrawingPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
+	private Vector<GRectangle> rectangles;//ªÁ∞¢«¸µÈ¿ª ¿˙¿Â«“ ∞¯∞£ º≥¡§
 
 	public GDrawingPanel() {
+
 		MouseHandler mouseHandler = new MouseHandler();
-		this.addMouseListener(mouseHandler); //Î≤ÑÌäº Î¶¨Ïä§ÎÑà
+		this.addMouseListener(mouseHandler);
 		this.addMouseMotionListener(mouseHandler);
+		
+		this.rectangles = new Vector<GRectangle>();//Vector ª˝º∫
 	}
-	
+
 	public void initialize() {
 	}
-	
-	protected void paintComponent(Graphics graphics) {
-		super.paintComponent(graphics);
+
+	protected void paintComponent(Graphics graphics) {// paint()∞° Ω««‡µ«∏È ¿Ã «‘ºˆ∞° Ω««‡
+		super.paintComponent(graphics);// drawingPanel ±◊∏Æ±‚
+		for(GRectangle rectangle: rectangles) {// rectangle¿Ã ≥≤æ∆¿÷¥Ÿ∏È ±◊∏Æ±‚
+			rectangle.draw((Graphics2D)graphics);
+		}
 	}
-	
-	public void draw(int x, int y, int w, int h) {
-		Graphics2D graphics =(Graphics2D) this.getGraphics();
-		graphics.setXORMode(getBackground());
-		graphics.drawRect(x, y, w, h);
-	}
-	
-	private class MouseHandler implements MouseListener,MouseMotionListener{
+
+	private class MouseHandler implements MouseListener, MouseMotionListener {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			System.out.println("mouseClicked");
-			
-			
+
 		}
-		private int x1,y1;
+
+		private GTransformer transformer;
+
 		@Override
-		public void mousePressed(MouseEvent e) {
-			System.out.println("mousePressed");
-			this.x1=e.getX();
-			this.y1=e.getY();
-			this.x2=this.x1;
-			this.y2=this.y1;
+		public void mousePressed(MouseEvent e) {// ≥ª∫Œ ø‰º“ ∫Ø∞Ê
+			transformer = new GTransformer();
+			Graphics2D graphics2D = (Graphics2D) getGraphics();
+			graphics2D.setXORMode(getBackground());
+			transformer.start(graphics2D, e.getX(), e.getY());
 		}
-		private int x2,y2; // Ïù¥Ï†ê Ï†ÄÏû•
-		private int ox2,oy2; 
+
 		@Override
-		public void mouseDragged(MouseEvent e) { //XORÎ°ú Í∑∏Î†§ÏïºÎê®
-			System.out.println("mouseDragged");
-			//erase
-			draw(x1,y1,x2-x1,y2-y1); 
-			//draw
-			this.x2=e.getX();
-			this.y2=e.getY();
-			draw(x1,y1,x2-x1,y2-y1);
+		public void mouseDragged(MouseEvent e) {
+			Graphics2D graphics2D = (Graphics2D) getGraphics();
+			graphics2D.setXORMode(getBackground());
+			transformer.drag(graphics2D, e.getX(), e.getY());
 		}
 
 		@Override
 		public void mouseMoved(MouseEvent e) {
 			System.out.println("mouseMoved");
 		}
+
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			System.out.println("mouseReleased");
-			
+			Graphics2D graphics2D = (Graphics2D) getGraphics();
+			graphics2D.setXORMode(getBackground());
+			GRectangle rectangle = transformer.finish(graphics2D, e.getX(), e.getY());
+			rectangles.add(rectangle);
 		}
 
 		@Override
 		public void mouseEntered(MouseEvent e) {
 			System.out.println("mouseEntered");
-			
+
 		}
 
 		@Override
 		public void mouseExited(MouseEvent e) {
 			System.out.println("mouseExited");
-			
+
 		}
 
-		
 	}
 }
