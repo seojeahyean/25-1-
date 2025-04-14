@@ -1,4 +1,4 @@
-package graphicsEditer;
+package Frames;
 
 public class GMain {
 
