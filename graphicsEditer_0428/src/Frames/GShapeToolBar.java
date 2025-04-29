@@ -24,19 +24,19 @@ public class GShapeToolBar extends JToolBar {
 	
 
 	private GDrawingPanel drawingPanel;
+	
 	public enum EDrawingType {
 		e2P,  //2점일 때/ 이 값이 eShape로 들어가야함
 		eNP	  //n개의 점일 때
 	}
 	
 	// Class에 대한 정의
-	public enum EShapeType { // 이뉴멀로 클래스일때는 대문자 E, new가 된 객체인 경우엔 소문자 e로 선언
+	public enum EShapeType { //
 		eSelect("select",EDrawingType.e2P, GRectangle.class),
-		eRectangle("rectangle", EDrawingType.e2P, GRectangle.class), //0번쨰 객체 글자의 의미 총 3개 포함, 프로그램이 실행 되기 전에? new가 되어서 이미 이미 메모리가 할당되어서 함eRectangle은 메모리 주소임, 이 총 4개는 배열에 들어가있음, 실제로 값은 0이지만 실제로 메모리 주소를 갖고, 실제로 오브젝트임(new가 되었다.)
-		// GRectangle.class를 이용?
-		eEllipse("ellipse", EDrawingType.e2P, GRectangle.class), //1번째 객체, 괄호 안에 있는 것은 생성자자를 호출한거하고 비슷함
+		eRectangle("rectangle", EDrawingType.e2P, GRectangle.class), //
+		eEllipse("ellipse", EDrawingType.e2P, GRectangle.class), //
 		eLine("line", EDrawingType.e2P, GRectangle.class),
-		ePolygon("polygon", EDrawingType.eNP, GRectangle.class); //객체 4개 생성
+		ePolygon("polygon", EDrawingType.eNP, GRectangle.class); //
 		
 		private String name; 
 		private EDrawingType eDrawingType;
@@ -71,13 +71,13 @@ public class GShapeToolBar extends JToolBar {
 		//this.setLayout(new FlowLayout(FlowLayout.LEFT)); 
 		
 		setLayout(new FlowLayout(FlowLayout.LEFT));// 버튼을 왼쪽으로 땡
-		ButtonGroup buttonGroup = new ButtonGroup();
-		for (EShapeType eShapeType: EShapeType.values()) {
+		ButtonGroup buttonGroup = new ButtonGroup();//라디오 버튼 그룹 생성
+		for (EShapeType eShapeType: EShapeType.values()) {//EShapeType 내부의 
 			JRadioButton radioButton = new JRadioButton(eShapeType.getName());
 			ActionHandler actionHandler = new ActionHandler();
 			radioButton.addActionListener(actionHandler);
 			radioButton.setActionCommand(eShapeType.toString());//액션이 일어나면 () 를 보내라 ~~~여기서 보내서
-		
+			
 			buttonGroup.add(radioButton);
 			this.add(radioButton); //자식으로 등록
 			System.out.println("a");
@@ -90,15 +90,17 @@ public class GShapeToolBar extends JToolBar {
 	public void initialize() {
 	
 	}
-	public void associate (GDrawingPanel drawingPanel) {
+	public void associate (GDrawingPanel drawingPanel) {//GMainFrame에서 이루어지는 association 과정의 메서드
 		this.drawingPanel = drawingPanel;
 	}
 	private class ActionHandler implements ActionListener {
 		 @Override
 	        public void actionPerformed(ActionEvent e) {
 	            String sShapeType = e.getActionCommand();//~~~여기서 받음
-	            EShapeType eShapeType = EShapeType.valueOf(sShapeType);
+	            EShapeType eShapeType = EShapeType.valueOf(sShapeType);//받아온 String을 통해 해당 이름을 가진 EShapeType을 
+	            //valueOf로 찾아냄
 	            drawingPanel.setEShapeType(eShapeType);
+	            //찾아낸 eShapeType 객체를 drawingPanel.setEShapeType을 통해 drawingPanel에 전달
 	        }
 		
 	}

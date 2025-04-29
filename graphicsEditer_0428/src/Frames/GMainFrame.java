@@ -7,17 +7,18 @@ import javax.swing.JFrame;
 public class GMainFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
+	//내부 요소 정의
 	private GMenuBar menuBar;
 	private GShapeToolBar toolBar;
 	private GDrawingPanel drawingPanel;
 	
 	public GMainFrame() {
-		//attribute
+		//본인 attribute 정의
 		this.setLocation(100,200);
 		this.setSize(600,400);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
-		//components
+		//components 정의
 		this.menuBar = new GMenuBar();
 		this.setJMenuBar(menuBar);
 		
@@ -30,8 +31,8 @@ public class GMainFrame extends JFrame {
 	}
 
 	public void initialize() {
-		//associate
-		this.toolBar.associate(this.drawingPanel);
+		//initialize 함수를 통해 자식 요소 생성 이후의 시점에서 association 정의
+		this.toolBar.associate(this.drawingPanel);//toolBar와 menuBar가 drawingPanel의 정보를 참조하도록 정의
 		this.menuBar.associate(this.drawingPanel);
 		//associated attributes
 		this.setVisible(true); 
