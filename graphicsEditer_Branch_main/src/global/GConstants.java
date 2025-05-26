@@ -16,6 +16,28 @@ public class GConstants {
 		public final static int H = 400;
 		
 	}
+
+	public enum EFileMenuItem{
+		eNew("새 파일","newPanel"),
+		eOpen("열기","open"),
+		eSave("저장","save"),
+		eSaveAs("다른 이름으로 저장","saveAs"),
+		ePrint("프린트","print"),
+		eQuit("종료","quit");
+		
+		private String name;//toolTip도 들어갈 수 있고, hot key??도 들어갈 수 있음
+		private String methodName;
+		
+		private EFileMenuItem(String name,String MethodName) {
+			this.name = name;
+			this.methodName = MethodName;
+		}public String getName() {
+			return this.name;
+		}
+		public String getMethodName() {
+			return this.methodName;
+		}
+	}
 	public enum EShapeTool { // 이뉴멀로 클래스일때는 대문자 E, new가 된 객체인 경우엔 소문자 e로 선언
 		eSelect("select", EPoints.e2P, GRectangle.class), eRectangle("rectangle", EPoints.e2P, GRectangle.class),
 		eEllipse("ellipse", EPoints.e2P, GRectangle.class), eLine("line", EPoints.e2P, GRectangle.class),

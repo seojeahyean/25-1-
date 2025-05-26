@@ -6,10 +6,11 @@ import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
+import java.io.Serializable;
 
 import global.GConstants.EAnchors;
 
-public abstract class GShape {
+public abstract class GShape implements Serializable {
 	private final static int ANCHOR_W = 10;
 	private final static int ANCHOR_H = 10;
 
@@ -25,9 +26,16 @@ public abstract class GShape {
 	private EAnchors eSelectedAnchor;// 0512
 	private AffineTransform affineTransform;
 	private int px, py;
+	private Shape orginalShape;
 
 	public AffineTransform getAffineTransform() {
 		return this.affineTransform;
+	}
+	public void setOriginalShape(Shape original) {
+		this.orginalShape = original;
+	}
+	public Shape getOriginalShape() {
+		return this.orginalShape;
 	}
 	public GShape(Shape shape) {
 		this.shape = shape;

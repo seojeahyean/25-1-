@@ -21,8 +21,7 @@ public class GMenuBar extends JMenuBar {
 	}
 
 	public void initialize() {
-		// TODO Auto-generated method stub
-		
+		this.fileMenu.associate(this.drawingPanel);
 	}
 
 	public void associate(GDrawingPanel drawingPanel) {
