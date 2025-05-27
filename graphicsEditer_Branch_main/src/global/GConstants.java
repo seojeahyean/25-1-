@@ -18,36 +18,37 @@ public class GConstants {
 	}
 
 	public enum EFileMenuItem{
-		eNew("»õ ÆÄÀÏ","newPanel"),
-		eOpen("¿­±â","open"),
-		eSave("ÀúÀå","save"),
-		eSaveAs("´Ù¸¥ ÀÌ¸§À¸·Î ÀúÀå","saveAs"),
-		ePrint("ÇÁ¸°Æ®","print"),
-		eQuit("Á¾·á","quit");
+		eNew("ìƒˆ íŒŒì¼","newPanel"),
+		eOpen("ì—´ê¸°","open"),
+		eSave("ì €ì¥","save"),
+		eSaveAs("ë‹¤ë¥¸ ì´ë¦„ìœ¼ë¡œ ì €ì¥","saveAs"),
+		ePrint("í”„ë¦°íŠ¸","print"),
+		eQuit("ì¢…ë£Œ","quit");
 		
-		private String name;//toolTipµµ µé¾î°¥ ¼ö ÀÖ°í, hot key??µµ µé¾î°¥ ¼ö ÀÖÀ½
+		private String name;
 		private String methodName;
 		
 		private EFileMenuItem(String name,String MethodName) {
 			this.name = name;
 			this.methodName = MethodName;
-		}public String getName() {
+		}
+		public String getName() {
 			return this.name;
 		}
 		public String getMethodName() {
 			return this.methodName;
 		}
 	}
-	public enum EShapeTool { // ÀÌ´º¸Ö·Î Å¬·¡½ºÀÏ¶§´Â ´ë¹®ÀÚ E, new°¡ µÈ °´Ã¼ÀÎ °æ¿ì¿£ ¼Ò¹®ÀÚ e·Î ¼±¾ğ
+	public enum EShapeTool { // í´ë˜ìŠ¤ ëª¨ë¸ë§ E, newë¡œ ì‹œì‘í•˜ëŠ” í´ë˜ìŠ¤ ì´ë¦„ ëª¨ë¸ë§ ê·œì¹™ì„ ë”°ë¥´ëŠ” í´ë˜ìŠ¤
 		eSelect("select", EPoints.e2P, GRectangle.class), eRectangle("rectangle", EPoints.e2P, GRectangle.class),
 		eEllipse("ellipse", EPoints.e2P, GRectangle.class), eLine("line", EPoints.e2P, GRectangle.class),
 		ePolygon("polygon", EPoints.eNP, GPolygon.class);
 
-		private String name;// ¹öÆ°ÀÌ¸§
-		private EPoints ePoints;// ±×¸®±â ¹æ½Ä
-		private Class<?> classShape;// ±×¸®°íÀÚ ÇÏ´Â µµÇü Å¬·¡½º
+		private String name;// í´ë˜ìŠ¤ ì´ë¦„
+		private EPoints ePoints;// í¬ì¸íŠ¸ íƒ€ì…
+		private Class<?> classShape;// í´ë˜ìŠ¤ íƒ€ì…
 
-		private EShapeTool(String name, EPoints eDrawingType, Class<?> classShape) { // »ı¼ºÀÚ
+		private EShapeTool(String name, EPoints eDrawingType, Class<?> classShape) { // ìƒì„±ì
 			this.name = name;
 			this.ePoints = eDrawingType;
 			this.classShape = classShape;
@@ -65,10 +66,10 @@ public class GConstants {
 		public GShape newShape() {
 
 			try {
-				GShape shape = (GShape) classShape.getConstructor().newInstance();// Áö±İÀÇ ½ÃÁ¡¿¡¼­´Â classShapeÀÌ <?>
-				// ·Î ¼±¾ğµÇ¾î ¾î¶² Å¸ÀÔÀÇ µµÇüÀÌ ¿Ã Áö ¾Ë ¼ö ¾ø±â ¶§¹®¿¡ ÀÌ¿Í °°Àº ÇüÅÂ·Î ¼±¾ğ
-				// getConstructor() == () ->¸Å°Ôº¯¼ö°¡ ¾ø´Â »ı¼ºÀÚ¸¦ ÅëÇØ
-				// newInstance() == ±âÁ¸ÀÇ new¿Í °°À½= °´Ã¼¸¦ ¸¸µé¾î¶ó
+				GShape shape = (GShape) classShape.getConstructor().newInstance();// í´ë˜ìŠ¤ íƒ€ì…ì˜ ìƒì„±ìë¥¼ í˜¸ì¶œí•˜ì—¬ ê°ì²´ë¥¼ ìƒì„±
+				// ì´ ë¶€ë¶„ì€ ì¶”ê°€ì ì¸ ê²€ì‚¬ë¥¼ í•´ì•¼ í•  ìˆ˜ë„ ìˆìŠµë‹ˆë‹¤.
+				// getConstructor() == () -> ìƒì„±ì ë©”ì„œë“œë¥¼ ì°¾ì•„ëƒ„
+				// newInstance() == newë¥¼ í˜¸ì¶œí•˜ì—¬ ê°ì²´ë¥¼ ìƒì„±
 				return shape;
 			} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
 					| InvocationTargetException | NoSuchMethodException | SecurityException e) {
