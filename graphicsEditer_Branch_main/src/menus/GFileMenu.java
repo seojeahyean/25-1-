@@ -12,6 +12,9 @@ import java.util.Vector;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.JOptionPane;
 
 import Frames.GDrawingPanel;
 import global.GConstants.EFileMenuItem;
@@ -61,6 +64,38 @@ public class GFileMenu extends JMenu {
 	}
 	public void saveAs() {
 		System.out.println("SaveAs");
+		
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setDialogTitle("다른 이름으로 저장");
+		
+		// 파일 필터 설정 (확장자가 .shape인 파일만 표시)
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("Shape 파일 (*.shape)", "shape");
+		fileChooser.setFileFilter(filter);
+		
+		int result = fileChooser.showSaveDialog(this);
+		if (result == JFileChooser.APPROVE_OPTION) {
+			try {
+				String filePath = fileChooser.getSelectedFile().getAbsolutePath();
+				// 확장자가 없으면 .shape 확장자 추가
+				if (!filePath.toLowerCase().endsWith(".shape")) {
+					filePath += ".shape";
+				}
+				
+				FileOutputStream fileOutputStream = new FileOutputStream(filePath);
+				BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
+				ObjectOutputStream objectOutputStream = new ObjectOutputStream(bufferedOutputStream);
+				
+				objectOutputStream.writeObject(this.drawingPanel.getShapes());
+				objectOutputStream.close();
+				
+			} catch(IOException e) {
+				JOptionPane.showMessageDialog(this, 
+					"파일 저장 중 오류가 발생했습니다: " + e.getMessage(),
+					"저장 오류",
+					JOptionPane.ERROR_MESSAGE);
+				e.printStackTrace();
+			}
+		}
 	}
 	public void print() {
 		System.out.println("print");
