@@ -3,8 +3,10 @@ package menus;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -47,15 +49,43 @@ public class GFileMenu extends JMenu {
 	}
 	public void open() {
 		System.out.println("open");
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setDialogTitle("파일 열기");
+		fileChooser.setFileFilter(new FileNameExtensionFilter("Shape 파일 (*.shape)", "shape"));
+		
+		int result = fileChooser.showOpenDialog(this);
+		if (result == JFileChooser.APPROVE_OPTION) {
+			try {
+				FileInputStream fileInputStream = new FileInputStream(
+					fileChooser.getSelectedFile().getAbsolutePath());
+				ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+				
+				@SuppressWarnings("unchecked")
+				Vector<GShape> shapes = (Vector<GShape>) objectInputStream.readObject();
+				this.drawingPanel.setShapes(shapes);
+				this.drawingPanel.repaint();
+				
+				objectInputStream.close();
+				fileInputStream.close();
+			} catch (IOException | ClassNotFoundException e) {
+				JOptionPane.showMessageDialog(this, 
+					"파일을 열 수 없습니다: " + e.getMessage(),
+					"열기 오류",
+					JOptionPane.ERROR_MESSAGE);
+				e.printStackTrace();
+			}
+		}
 	}
 	public void save() {
 		System.out.println("save");
 
 		try {
-			FileOutputStream fileOutputStream = new FileOutputStream("file");
+						/*FileOutputStream fileOutputStream = new FileOutputStream("file");
+			ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream); */
+			 FileOutputStream fileOutputStream = new FileOutputStream("file");
 			BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
 			ObjectOutputStream objectOutputStream = new ObjectOutputStream(bufferedOutputStream);
-			
+
 			objectOutputStream.writeObject((this.drawingPanel.getShapes()));
 			objectOutputStream.close();					
 		}catch(IOException e) {
