@@ -163,10 +163,11 @@ public abstract class GShape implements Serializable {
 		}
 		return false;
 	}
-	public boolean contains(GShape shape) {
-		return this.shape.contains(shape.getShape().getBounds());
-		
-	};
+	public boolean contains(GShape otherShape) {
+		Shape transformedShape = this.affineTransform.createTransformedShape(this.shape);
+		Shape otherTransformedShape = otherShape.getTransformedShape();
+		return transformedShape.getBounds().contains(otherTransformedShape.getBounds());
+	}
 
 	public abstract void setPoint(int x, int y);
 

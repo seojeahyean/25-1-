@@ -11,9 +11,9 @@ import shapes.GShape.EPoints;
 public class GConstants {
 	public final class GMainFrame{
 		public final static int X = 100;
-		public final static int Y = 200;
-		public final static int W = 600;
-		public final static int H = 400;
+		public final static int Y = 100;
+		public final static int W = 1000;
+		public final static int H = 700;
 		
 	}
 
