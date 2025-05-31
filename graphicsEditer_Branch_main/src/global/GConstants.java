@@ -39,6 +39,48 @@ public class GConstants {
 			return this.methodName;
 		}
 	}
+
+	public enum EEditMenuItem {
+		eProperty("Property", "property"),
+		eUndo("Undo", "undo"),
+		eRedo("Redo", "redo");
+		
+		private String name;
+		private String methodName;
+		
+		private EEditMenuItem(String name, String methodName) {
+			this.name = name;
+			this.methodName = methodName;
+		}
+		public String getName() {
+			return this.name;
+		}
+		public String getMethodName() {
+			return this.methodName;
+		}
+	}
+
+	public enum EGraphicMenuItem {
+		eLineThickness("Line Thickness", "lineThickness"),
+		eLineStyle("Line Style", "lineStyle"),
+		eFontStyle("Font Style", "fontStyle"),
+		eFontSize("Font Size", "fontSize");
+		
+		private String name;
+		private String methodName;
+		
+		private EGraphicMenuItem(String name, String methodName) {
+			this.name = name;
+			this.methodName = methodName;
+		}
+		public String getName() {
+			return this.name;
+		}
+		public String getMethodName() {
+			return this.methodName;
+		}
+	}
+
 	public enum EShapeTool { // 클래스 모델링 E, new로 시작하는 클래스 이름 모델링 규칙을 따르는 클래스
 		eSelect("select", EPoints.e2P, GRectangle.class), eRectangle("rectangle", EPoints.e2P, GRectangle.class),
 		eEllipse("ellipse", EPoints.e2P, GRectangle.class), eLine("line", EPoints.e2P, GRectangle.class),

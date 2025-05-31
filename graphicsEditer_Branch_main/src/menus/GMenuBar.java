@@ -1,19 +1,13 @@
-package Frames;
+package menus;
 
 import javax.swing.JMenuBar;
 
-import menus.GFileMenu;
-import menus.GEditMenu;
-import menus.GGraphicMenu;
-
 public class GMenuBar extends JMenuBar {
 	private static final long serialVersionUID = 1L;
-	//components
+	
 	private GFileMenu fileMenu;
 	private GEditMenu editMenu;
 	private GGraphicMenu graphicMenu;
-	//associations
-	private GDrawingPanel drawingPanel;
 	
 	public GMenuBar() {
 		this.fileMenu = new GFileMenu();
@@ -25,12 +19,10 @@ public class GMenuBar extends JMenuBar {
 		this.graphicMenu = new GGraphicMenu();
 		this.add(this.graphicMenu);
 	}
-
+	
 	public void initialize() {
-		this.fileMenu.associate(this.drawingPanel);
+		this.fileMenu.initialize();
+		this.editMenu.initialize();
+		this.graphicMenu.initialize();
 	}
-
-	public void associate(GDrawingPanel drawingPanel) {
-		this.drawingPanel = drawingPanel;
-	}
-}
+} 
