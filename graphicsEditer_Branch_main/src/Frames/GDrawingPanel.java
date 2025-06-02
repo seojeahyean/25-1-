@@ -28,106 +28,118 @@ public class GDrawingPanel extends JPanel {
 		eIdle, e2P, eNP
 	}
 
+	// components
 	private Vector<GShape> shapes;
-	
+	// working area
 	private GTransformer transformer;
 	private GShape currentShape;
 	private GShape selectedShape;
 	private EShapeTool eShapeTool;
 	private EDrawingState eDrawingState;
+	private boolean bUpdated;
 
 	public GDrawingPanel() {
-		MouseHandler mouseHandler = new MouseHandler();// 留��곗�� �몃�ㅻ�� ����
-		this.addMouseListener(mouseHandler); // 留��곗�� �몃�ㅻ�� �곌껐
-		this.addMouseMotionListener(mouseHandler);// 留��곗�� 紐⑥�� 由ъ�ㅻ�� �곌껐
+		MouseHandler mouseHandler = new MouseHandler();
+		this.addMouseListener(mouseHandler);
+		this.addMouseMotionListener(mouseHandler);
 
-		this.currentShape = null;// 珥�湲곌� �ㅼ�� 諛� ����
-		this.selectedShape = null;
 		this.shapes = new Vector<GShape>();
+		this.currentShape = null;
+		this.selectedShape = null;
 		this.eShapeTool = null;
-		this.eDrawingState = EDrawingState.eIdle;// 珥�湲� 洹몃━湲� ������ eIdle
-
+		this.eDrawingState = EDrawingState.eIdle;
+		this.bUpdated = false;
 	}
 
 	public void initialize() {
+		this.shapes.clear();
+		this.repaint();
 	}
-	public Vector<GShape> getShapes(){
+
+	// getter and setter
+	public Vector<GShape> getShapes() {
 		return this.shapes;
 	}
+
 	public void setShapes(Object shapes) {
 		this.shapes = (Vector<GShape>) shapes;
 		this.repaint();
 	}
 
-	public void setEShapeTool(EShapeTool eShapeTool) {// GShapeToolBar���� �몄�, ������ 踰��쇱�� Enum�� ����: eShapeTool�� ����
+	public void setEShapeTool(EShapeTool eShapeTool) {
 		this.eShapeTool = eShapeTool;
-		
-
 	}
 
-	protected void paintComponent(Graphics graphics) {// paint()媛� �몄���硫� ����
+	public boolean isUpdated() {
+		return this.bUpdated;
+	}
+	public void setBUpdated(boolean bUpdated) {
+		this.bUpdated = bUpdated;
+		
+	}
+
+	// methods
+	protected void paintComponent(Graphics graphics) {
 		super.paintComponent(graphics);
 		Graphics2D g2 = (Graphics2D) graphics;
-		for (GShape shape : this.shapes) {// shapes 諛곗�� �댁�� �ㅼ�댁���� 紐⑤�� ������ 洹몃━湲�
-			shape.draw((Graphics2D) graphics);// shape�� draw �⑥�� �ㅽ��
+		for (GShape shape : this.shapes) {
+			shape.draw((Graphics2D) graphics);
 		}
-
 	}
 
-	private GShape onShape(int x, int y) {// 醫���媛� ������ ���� ����吏� ���⑦���� 硫�����
-		for (GShape shape : this.shapes) {// shape�ㅼ�� �ㅼ�댁���� 諛곗�� shapes瑜� ����
-			if (shape.contains(x, y)) {// shape.contains瑜� �ㅽ��
-				return shape;// �ы�� ���댁���ㅻ㈃ �대�� shape 諛���
+	private GShape onShape(int x, int y) {
+		for (GShape shape : this.shapes) {
+			if (shape.contains(x, y)) {
+				return shape;
 			}
 		}
-		return null;// �ы�⑦���� shape�� ���ㅻ㈃ null 由ы��
+		return null;
 	}
 
-	private void startTransform(int x, int y) {// 蹂��� ����
-		// set shape
-		this.currentShape = eShapeTool.newShape();// 蹂�����怨��� ���� currentShape�� eShapeTool.newShape�� �듯�� ����
-		this.shapes.add(this.currentShape);// shapes 諛곗�댁�� currentShape 異�媛�
-		if (this.eShapeTool == EShapeTool.eSelect) {// 留��� ������ 踰��쇱�� select �쇰㈃
-			this.selectedShape = onShape(x, y);// �� ������ ���� selectedShape�� ���댁�� 泥�由�, �대�� 留��곗�� �ъ�명�� ��移��� ������ ���� ��蹂�
-			if (this.selectedShape == null) {// 留��곗�ㅺ� 鍮�怨녹�� �����ㅻ㈃
-				this.transformer = new GDrawer(this.currentShape);// ������ 鍮� 怨녹�� �↔� 洹몃━硫� �ㅻえ�� 洹몃�ㅼ��� ��湲� ��臾몄�� 洹몃━湲� 媛�泥� ����
+	private void startTransform(int x, int y) {
+		this.currentShape = eShapeTool.newShape();
+		this.shapes.add(this.currentShape);
+		if (this.eShapeTool == EShapeTool.eSelect) {
+			this.selectedShape = onShape(x, y);
+			if (this.selectedShape == null) {
+				this.transformer = new GDrawer(this.currentShape);
 			} else if (this.selectedShape.getESelectedAnchor() == EAnchors.eMM) {
-				this.transformer = new GMover(this.selectedShape);// �대�� 媛�泥� ����
+				this.transformer = new GMover(this.selectedShape);
 			} else if (this.selectedShape.getESelectedAnchor() == EAnchors.eRR) {
 				this.transformer = new GRotater(this.selectedShape);
 			} else {
 				this.transformer = new GResizer(this.selectedShape);
 			}
-
-		} else {// 留��� ������ 踰��쇱�� select媛� �����쇰㈃
-			this.transformer = new GDrawer(this.currentShape);// transformer瑜� 洹몃━湲� ��援щ� �ㅼ��
+		} else {
+			this.transformer = new GDrawer(this.currentShape);
 		}
-		this.transformer.start((Graphics2D) getGraphics(), x, y);// transformer��寃� ���� ���� ����
+		this.transformer.start((Graphics2D) getGraphics(), x, y);
 	}
 
-	private void keepTransform(int x, int y) {// 蹂��� ��以�
-		this.transformer.drag((Graphics2D) getGraphics(), x, y);// transformer��寃� drag以����� ����
-		this.repaint();// ��硫� �ш뎄��
+	private void keepTransform(int x, int y) {
+		this.transformer.drag((Graphics2D) getGraphics(), x, y);
+		this.repaint();
 	}
 
 	private void addPoint(int x, int y) {
 		this.transformer.addPoint((Graphics2D) getGraphics(), x, y);
 	}
 
-	private void finishTransform(int x, int y) {// 蹂��� 醫�猷�
-		this.transformer.finish((Graphics2D) getGraphics(), x, y);// transformer��寃� 蹂��� 醫�猷�瑜� ����
+	private void finishTransform(int x, int y) {
+		this.transformer.finish((Graphics2D) getGraphics(), x, y);
 		this.selectShape(this.currentShape);
-		if (this.eShapeTool == EShapeTool.eSelect) {// 洹몄��� ������ 踰��쇱�� select�� 寃쎌�곗����
-			this.shapes.remove(this.shapes.size() - 1);// ���� 留�吏�留��� 洹몃┛ ����留� ����, because ������ ���� ����洹몄������ ������ �⑥�������댁�� ����
-			for(GShape shape: this.shapes) {
-				if(this.currentShape.contains(shape)) {
+		if (this.eShapeTool == EShapeTool.eSelect) {
+			this.shapes.remove(this.shapes.size() - 1);
+			for (GShape shape : this.shapes) {
+				if (this.currentShape.contains(shape)) {
 					shape.setSelected(true);
-				}else {
+				} else {
 					shape.setSelected(false);
 				}
 			}
 		}
-		this.repaint();// ��硫� �ㅼ�� 洹몃━湲�
+		this.bUpdated = true;
+		this.repaint();
 	}
 
 	private void selectShape(GShape shape) {
@@ -153,37 +165,35 @@ public class GDrawingPanel extends JPanel {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			if (e.getClickCount() == 1) {// ��硫댁�� 1�� �대┃��
+			if (e.getClickCount() == 1) {
 				this.mouse1Clicked(e);
-			} else if (e.getClickCount() == 2) {// ��硫댁�� 2�� �대┃��
+			} else if (e.getClickCount() == 2) {
 				this.mouse2Clicked(e);
 			}
 		}
 
-		private void mouse1Clicked(MouseEvent e) {// 1�� �대┃��
-			if (eDrawingState == EDrawingState.eIdle) {// 洹몃━湲� ����媛� eIdle�대�쇰㈃
-				// set transformer
-				if (eShapeTool.getEPoints() == EPoints.e2P) {// eIdle�닿� e2P 洹몃�ㅼ�� ��
+		private void mouse1Clicked(MouseEvent e) {
+			if (eDrawingState == EDrawingState.eIdle) {
+				if (eShapeTool.getEPoints() == EPoints.e2P) {
 					startTransform(e.getX(), e.getY());
 					eDrawingState = EDrawingState.e2P;
-				} else if (eShapeTool.getEPoints() == EPoints.eNP) {// eIdle�닿� eNP 洹몃�ㅼ�� ��
+				} else if (eShapeTool.getEPoints() == EPoints.eNP) {
 					startTransform(e.getX(), e.getY());
 					eDrawingState = EDrawingState.eNP;
 				}
-
-			} else if (eDrawingState == EDrawingState.e2P) {// 洹몃━湲� ����媛� e2P瑜� 洹몃━�� 以��대�쇰㈃
-				finishTransform(e.getX(), e.getY());// 蹂��� 醫�猷�
-				eDrawingState = EDrawingState.eIdle;// 洹몃━湲� ���� eIdle濡� �ㅼ�� 蹂�寃�
-			} else if (eDrawingState == EDrawingState.eNP) {// 洹몃━湲� ����媛� eNP�쇰㈃
-				addPoint(e.getX(), e.getY());// �� 異�媛�
+			} else if (eDrawingState == EDrawingState.e2P) {
+				finishTransform(e.getX(), e.getY());
+				eDrawingState = EDrawingState.eIdle;
+			} else if (eDrawingState == EDrawingState.eNP) {
+				addPoint(e.getX(), e.getY());
 			}
 		}
 
 		@Override
-		public void mouseMoved(MouseEvent e) {// 留��곗�� �대����
-			if (eDrawingState == EDrawingState.e2P) {// 洹몃━湲� ����媛� e2P�쇰㈃
-				keepTransform(e.getX(), e.getY());// keepTransform �ㅽ��
-			} else if (eDrawingState == EDrawingState.eNP) {// 洹몃━湲� ����媛� eNP �쇰㈃
+		public void mouseMoved(MouseEvent e) {
+			if (eDrawingState == EDrawingState.e2P) {
+				keepTransform(e.getX(), e.getY());
+			} else if (eDrawingState == EDrawingState.eNP) {
 				keepTransform(e.getX(), e.getY());
 			} else if (eDrawingState == EDrawingState.eIdle) {
 				changeCursor(e.getX(), e.getY());
@@ -199,17 +209,14 @@ public class GDrawingPanel extends JPanel {
 
 		@Override
 		public void mousePressed(MouseEvent e) {
-
 		}
 
 		@Override
 		public void mouseDragged(MouseEvent e) {
-
 		}
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
-
 		}
 
 		@Override
@@ -220,4 +227,7 @@ public class GDrawingPanel extends JPanel {
 		public void mouseExited(MouseEvent e) {
 		}
 	}
+
+
+
 }
