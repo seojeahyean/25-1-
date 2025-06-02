@@ -48,10 +48,22 @@ public class GFileMenu extends JMenu {
 		System.out.println("newPanel");
 	}
 	public void open() {
+		/*try {
+			    FileInputStream fileInputStream = new FileInputStream("file");
+				BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
+				ObjectInputStream objectInputStream = new ObjectInputStream(bufferedInputStream);
+				this.drawingPanel.setShapes(objectInputStream.readObject());
+				objectInputStream.close();
+				
+			} catch (IOException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		  */
+		 
 		System.out.println("open");
 		JFileChooser fileChooser = new JFileChooser();
-		fileChooser.setDialogTitle("파일 열기");
-		fileChooser.setFileFilter(new FileNameExtensionFilter("Shape 파일 (*.shape)", "shape"));
+		fileChooser.setDialogTitle("���� �닿린");
+		fileChooser.setFileFilter(new FileNameExtensionFilter("Shape ���� (*.shape)", "shape"));
 		
 		int result = fileChooser.showOpenDialog(this);
 		if (result == JFileChooser.APPROVE_OPTION) {
@@ -69,8 +81,8 @@ public class GFileMenu extends JMenu {
 				fileInputStream.close();
 			} catch (IOException | ClassNotFoundException e) {
 				JOptionPane.showMessageDialog(this, 
-					"파일을 열 수 없습니다: " + e.getMessage(),
-					"열기 오류",
+					"���쇱�� �� �� ���듬����: " + e.getMessage(),
+					"�닿린 �ㅻ�",
 					JOptionPane.ERROR_MESSAGE);
 				e.printStackTrace();
 			}
@@ -96,17 +108,17 @@ public class GFileMenu extends JMenu {
 		System.out.println("SaveAs");
 		
 		JFileChooser fileChooser = new JFileChooser();
-		fileChooser.setDialogTitle("다른 이름으로 저장");
+		fileChooser.setDialogTitle("�ㅻⅨ �대��쇰� ����");
 		
-		// 파일 필터 설정 (확장자가 .shape인 파일만 표시)
-		FileNameExtensionFilter filter = new FileNameExtensionFilter("Shape 파일 (*.shape)", "shape");
+		// ���� ���� �ㅼ�� (���μ��媛� .shape�� ���쇰� ����)
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("Shape ���� (*.shape)", "shape");
 		fileChooser.setFileFilter(filter);
 		
 		int result = fileChooser.showSaveDialog(this);
 		if (result == JFileChooser.APPROVE_OPTION) {
 			try {
 				String filePath = fileChooser.getSelectedFile().getAbsolutePath();
-				// 확장자가 없으면 .shape 확장자 추가
+				// ���μ��媛� ���쇰㈃ .shape ���μ�� 異�媛�
 				if (!filePath.toLowerCase().endsWith(".shape")) {
 					filePath += ".shape";
 				}
@@ -120,8 +132,8 @@ public class GFileMenu extends JMenu {
 				
 			} catch(IOException e) {
 				JOptionPane.showMessageDialog(this, 
-					"파일 저장 중 오류가 발생했습니다: " + e.getMessage(),
-					"저장 오류",
+					"���� ���� 以� �ㅻ�媛� 諛������듬����: " + e.getMessage(),
+					"���� �ㅻ�",
 					JOptionPane.ERROR_MESSAGE);
 				e.printStackTrace();
 			}
