@@ -1,7 +1,15 @@
 package global;
 
 import java.awt.Cursor;
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
+
+import javax.swing.text.Document;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import shapes.GPolygon;
 import shapes.GRectangle;
@@ -9,11 +17,58 @@ import shapes.GShape;
 import shapes.GShape.EPoints;
 
 public class GConstants {
-	public final class GMainFrame{
-		public final static int X = 100;
-		public final static int Y = 100;
-		public final static int W = 1000;
-		public final static int H = 700;
+
+	public void readFrromFile(String fileName) {
+		try {
+			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder builder = factory.newDocumentBuilder();
+			
+			File file = new File(fileName);
+			Document document = builder.parse(file);
+			NodeList nodeList = document.getDocumentElement().getChildNodes();
+			for(int i = 0; i<nodeList.getLength(); i++) {
+				Node node = nodeList.item(i);
+				if(node.getNodeType() == Node.ELEMENT_NODE) {
+					if(node.getNodeName().equals(EMainFrame.class.getSimpleName())) {
+						GMainFrame.setValues(node);
+					}else if(node.getNodeName().equals(EMenu.class.getSimpleName())) {
+						EMenu.setValues(node);
+					}else if(node.getNodeName().equals(EFileNemuItem.class.getSimpleName())){
+						EFileNemuItem.setValues(node);
+					}else if(node.getNodeName().equals(EEditMenuItem.class.getSimpleName())){
+						EEditMenuItem.setValues(node);
+					}else if(node.getNodeName().equals(EGraphicsMenuItem.class.getSimpleName())){
+						EGraphicsMenuItem.setValues(node);
+					}else if(node.getNodeName().equals(EToolBarButton.class.getSimpleName())){
+						EToolBarButton.setValues(node);
+					}
+				}
+			}
+			
+		}catch() {
+			
+		}
+	}
+	
+	public enum GMainFrame{
+		eX(0),
+		eY(0),
+		eW(0),
+		eH(0);
+		private int value;
+		private GMainFrame(int value) {
+			this.value = value;
+		}
+		public int getValue() {
+			return this.value;
+		}
+		
+	public void setValues(Node node) {
+		for(GMainFrame gMainFrame: GMainFrame.values()) {
+			Node attribute = node.getAttributes().getNamedItem(gMainFrame.name());
+			gMainFrame.value = Integer.parseInt(attribute.getNodeValue());
+		}
+	}
 		
 	}
 
@@ -27,6 +82,7 @@ public class GConstants {
 		eQuit("종료","quit");
 		
 		private String name;
+		private String toolTipText;
 		private String methodName;
 		
 		private EFileMenuItem(String name,String MethodName) {
