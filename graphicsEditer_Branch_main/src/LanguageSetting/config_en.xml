@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GConstants>
+    <GMainFrame eX="200" eY="100" eW="1000" eH="1000"/>
+    <GMenuBar fileMenu="File" editMenu="Edit" graphicsMenu="Graphics"/>
+    <EFileMenuItem eNew="New" eOpen="Open" eSave="Save" eSaveAs="Save As" ePrint="Print" eClose="Close" eQuit="Quit"/>
+    <EEditMenuItem eUndo="Undo" eRedo="Redo" eProperty="Property"/>
+    <EGraphicMenuItem eLineThickness="Line Thickness" eLineStyle="Line Style" eFontStyle="Font Style" eFontSize="Font Size"/>
+    <GShapeToolBar eSelect="Select" eRectangle="Rectangle" eEllipse="Ellipse" eLine="Line" ePolygon="Polygon"/>
+</GConstants>

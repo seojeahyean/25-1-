@@ -8,13 +8,16 @@ import java.lang.reflect.Method;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
+import Frames.GDrawingPanel;
 import global.GConstants.EEditMenuItem;
+import global.GConstants.EMenuBar;
 
 public class GEditMenu extends JMenu {
 	private static final long serialVersionUID = 1L;
+	private GDrawingPanel drawingPanel;
 	
 	public GEditMenu() {
-		super("Edit");
+		super(EMenuBar.editMenu.getLabel());
 		
 		ActionHandler actionHandler = new ActionHandler();
 		for(EEditMenuItem eMenuItem: EEditMenuItem.values()) {
@@ -26,6 +29,10 @@ public class GEditMenu extends JMenu {
 	}
 	
 	public void initialize() {
+	}
+	
+	public void associate(GDrawingPanel drawingPanel) {
+		this.drawingPanel = drawingPanel;
 	}
 	
 	private void property() {

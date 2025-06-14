@@ -1,6 +1,8 @@
 eclipse.preferences.version=1
 encoding//src/Frames/GDrawingPanel.java=UTF-8
+encoding//src/Frames/GMainFrame.java=UTF-8
 encoding//src/Frames/GShapeToolBar.java=UTF-8
 encoding//src/global/GConstants.java=UTF-8
+encoding//src/global/GMain.java=UTF-8
 encoding//src/menus/GFileMenu.java=UTF-8
 encoding/<project>=UTF-8

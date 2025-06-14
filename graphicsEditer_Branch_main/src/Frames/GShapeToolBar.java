@@ -26,7 +26,7 @@ public class GShapeToolBar extends JToolBar {
 		ButtonGroup buttonGroup = new ButtonGroup();// 버튼 그룹 설정
 		for (EShapeTool eShapeType : EShapeTool.values()) {// 개선된 for문을 통해 라디오버튼 내부 객체 생성
 			
-			JRadioButton radioButton = new JRadioButton(eShapeType.getName());// getName을 통해 버튼 생성
+			JRadioButton radioButton = new JRadioButton(eShapeType.getLabel());// getName을 통해 버튼 생성
 			
 			ActionHandler actionHandler = new ActionHandler();// 액션핸들러 생성
 			radioButton.addActionListener(actionHandler);// 액션핸들러 연결

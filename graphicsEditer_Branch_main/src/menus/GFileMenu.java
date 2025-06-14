@@ -21,6 +21,7 @@ import javax.swing.JOptionPane;
 
 import Frames.GDrawingPanel;
 import global.GConstants.EFileMenuItem;
+import global.GConstants.EMenuBar;
 import shapes.GShape;
 
 public class GFileMenu extends JMenu {
@@ -31,7 +32,7 @@ public class GFileMenu extends JMenu {
 	private GDrawingPanel drawingPanel;
 
 	public GFileMenu() {
-		super("File");
+		super(EMenuBar.fileMenu.getLabel());
 
 		ActionHandler actionHandler = new ActionHandler();
 		for (EFileMenuItem eMenuItem : EFileMenuItem.values()) {

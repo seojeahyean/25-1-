@@ -8,13 +8,16 @@ import java.lang.reflect.Method;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
+import Frames.GDrawingPanel;
 import global.GConstants.EGraphicMenuItem;
+import global.GConstants.EMenuBar;
 
 public class GGraphicMenu extends JMenu {
 	private static final long serialVersionUID = 1L;
+	private GDrawingPanel drawingPanel;
 	
 	public GGraphicMenu() {
-		super("Graphic");
+		super(EMenuBar.graphicsMenu.getLabel());
 		
 		ActionHandler actionHandler = new ActionHandler();
 		for(EGraphicMenuItem eMenuItem: EGraphicMenuItem.values()) {
@@ -26,6 +29,10 @@ public class GGraphicMenu extends JMenu {
 	}
 	
 	public void initialize() {
+	}
+	
+	public void associate(GDrawingPanel drawingPanel) {
+		this.drawingPanel = drawingPanel;
 	}
 	
 	private void lineThickness() {
