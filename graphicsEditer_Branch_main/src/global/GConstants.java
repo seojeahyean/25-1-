@@ -19,6 +19,8 @@ import Frames.GDrawingPanel;
 import Frames.GMainFrame;
 import Frames.GMenuBar;
 import Frames.GShapeToolBar;
+import shapes.GEllipse;
+import shapes.GLine;
 import shapes.GPolygon;
 import shapes.GRectangle;
 import shapes.GShape;
@@ -308,8 +310,8 @@ public class GConstants {
     public enum EShapeTool {
         eSelect("select", GShape.EPoints.e2P, GRectangle.class),
         eRectangle("rectangle", GShape.EPoints.e2P, GRectangle.class),
-        eEllipse("ellipse", GShape.EPoints.e2P, GRectangle.class),
-        eLine("line", GShape.EPoints.e2P, GRectangle.class),
+        eEllipse("ellipse", GShape.EPoints.e2P, GEllipse.class),
+        eLine("line", GShape.EPoints.e2P, GLine.class),
         ePolygon("polygon", GShape.EPoints.eNP, GPolygon.class);
 
         private final String name;
