@@ -5,5 +5,5 @@
     <EFileMenuItem eNew="新規" eOpen="開く" eSave="保存" eSaveAs="名前を付けて保存" ePrint="印刷" eClose="閉じる" eQuit="終了"/>
     <EEditMenuItem eUndo="元に戻す" eRedo="やり直し" eProperty="プロパティ"/>
     <EGraphicMenuItem eLineThickness="線の太さ" eLineStyle="線のスタイル" eFontStyle="フォントスタイル" eFontSize="フォントサイズ"/>
-    <GShapeToolBar eSelect="選択" eRectangle="四角形" eEllipse="楕円" eLine="線" ePolygon="多角形"/>
+    <GShapeToolBar eSelect="選択" eRectangle="四角形" eEllipse="楕円" eLine="線" ePolygon="多角形" eText="テクスト"/>
 </GConstants>

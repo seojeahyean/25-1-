@@ -22,7 +22,6 @@ public class GMainFrame extends JFrame {
 		//components
 		this.menuBar = new GMenuBar();
 		this.setJMenuBar(this.menuBar);
-		System.out.println("硫��대� �ㅼ����: " + (this.menuBar != null));
 		
 		this.setLayout(new BorderLayout());
 		this.toolBar = new GShapeToolBar();

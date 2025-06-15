@@ -5,5 +5,5 @@
     <EFileMenuItem eNew="새로 만들기" eOpen="열기" eSave="저장" eSaveAs="다른 이름으로 저장" ePrint="프린트" eClose="닫기" eQuit="종료"/>
     <EEditMenuItem eUndo="되돌리기" eRedo="다시실행" eProperty="속성"/>
     <EGraphicMenuItem eLineThickness="선 두께" eLineStyle="선 스타일" eFontStyle="글꼴 스타일" eFontSize="글꼴 크기"/>
-    <GShapeToolBar eSelect="선택" eRectangle="사각형" eEllipse="타원" eLine="선" ePolygon="다각형"/>
+    <GShapeToolBar eSelect="선택" eRectangle="사각형" eEllipse="타원" eLine="선" ePolygon="다각형" eText ="텍스트"/>
 </GConstants>

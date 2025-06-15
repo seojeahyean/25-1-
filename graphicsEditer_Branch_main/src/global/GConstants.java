@@ -24,6 +24,7 @@ import shapes.GLine;
 import shapes.GPolygon;
 import shapes.GRectangle;
 import shapes.GShape;
+import shapes.GText;
 
 public class GConstants {
     private static final String CONFIG_FILE_KR = "src/LanguageSetting/config_kr.xml";
@@ -151,7 +152,7 @@ public class GConstants {
     public final class GFileMenu {
         public final static String SS = ".shape";
         public final static String S = "shape";
-        public final static String DS = "Shape file (*.shape)";
+        public final static String DS = "shape file (*.shape)";
     }
 	//////////////////////////////////////////////////////////////////////
     public enum EFileMenuItem {
@@ -312,7 +313,8 @@ public class GConstants {
         eRectangle("rectangle", GShape.EPoints.e2P, GRectangle.class),
         eEllipse("ellipse", GShape.EPoints.e2P, GEllipse.class),
         eLine("line", GShape.EPoints.e2P, GLine.class),
-        ePolygon("polygon", GShape.EPoints.eNP, GPolygon.class);
+        ePolygon("polygon", GShape.EPoints.eNP, GPolygon.class),
+    	eText("text", GShape.EPoints.e2P, GText.class);
 
         private final String name;
         private String label;

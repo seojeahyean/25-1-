@@ -5,5 +5,5 @@
     <EFileMenuItem eNew="New" eOpen="Open" eSave="Save" eSaveAs="Save As" ePrint="Print" eClose="Close" eQuit="Quit"/>
     <EEditMenuItem eUndo="Undo" eRedo="Redo" eProperty="Property"/>
     <EGraphicMenuItem eLineThickness="Line Thickness" eLineStyle="Line Style" eFontStyle="Font Style" eFontSize="Font Size"/>
-    <GShapeToolBar eSelect="Select" eRectangle="Rectangle" eEllipse="Ellipse" eLine="Line" ePolygon="Polygon"/>
+    <GShapeToolBar eSelect="Select" eRectangle="Rectangle" eEllipse="Ellipse" eLine="Line" ePolygon="Polygon" eText="Text"/>
 </GConstants>

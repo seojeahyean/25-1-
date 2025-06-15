@@ -45,7 +45,7 @@ public class GFileMenu extends JMenu {
 
 	public void initialize() {
 		this.dir = new File("C:\\Users\\NAM\\전공 자료\\work\\패턴중심적사고와프로그래밍\\directory");
-		this.file = new File("newFile.gvs");
+		this.file = new File("newFile.shape");
 	}
 
 	public void associate(GDrawingPanel drawingPanel) {
@@ -104,7 +104,9 @@ public class GFileMenu extends JMenu {
 	public void save() {
 		System.out.println("save");
 		if(this.file == null) {
-			if(this.saveAs()) {
+			this.saveAs();
+		}else {
+			if(!this.saveAs()) {
 				try {
 					/*
 					 * FileOutputStream fileOutputStream = new FileOutputStream("file");
@@ -122,7 +124,7 @@ public class GFileMenu extends JMenu {
 					e.printStackTrace();
 				}
 			}
-		}
+		}		
 	}
 
 	public boolean saveAs() {
@@ -130,13 +132,12 @@ public class GFileMenu extends JMenu {
 		boolean bCancel = false;
 		JFileChooser chooser = new JFileChooser(this.dir);
 		chooser.setSelectedFile(this.file);
-		FileNameExtensionFilter filter = new FileNameExtensionFilter("Graphics Data","gvs");
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("Graphics Data","shape");
 		chooser.setFileFilter(filter);
 		int returnVal = chooser.showSaveDialog(this.drawingPanel);
 		if(returnVal==JFileChooser.APPROVE_OPTION) {
 			this.dir = chooser.getCurrentDirectory();
 			this.file = chooser.getSelectedFile();
-			this.save();
 		}else {
 			bCancel = true;
 		}

@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import javax.swing.Timer;
 import java.util.Vector;
 
 import javax.swing.JPanel;
@@ -14,10 +15,12 @@ import global.GConstants.EAnchors;
 import global.GConstants.EShapeTool;
 import shapes.GShape;
 import shapes.GShape.EPoints;
+import shapes.GText;
 import transformers.GDrawer;
 import transformers.GMover;
 import transformers.GResizer;
 import transformers.GRotater;
+import transformers.GTextDrawer;
 import transformers.GTransformer;
 
 public class GDrawingPanel extends JPanel {
@@ -73,9 +76,10 @@ public class GDrawingPanel extends JPanel {
 	public boolean isUpdated() {
 		return this.bUpdated;
 	}
+
 	public void setBUpdated(boolean bUpdated) {
 		this.bUpdated = bUpdated;
-		
+
 	}
 
 	// methods
@@ -102,7 +106,7 @@ public class GDrawingPanel extends JPanel {
 		if (this.eShapeTool == EShapeTool.eSelect) {
 			this.selectedShape = onShape(x, y);
 			if (this.selectedShape == null) {
-				this.transformer = new GDrawer(this.currentShape);
+				this.transformer = new GDrawer(this.currentShape);				
 			} else if (this.selectedShape.getESelectedAnchor() == EAnchors.eMM) {
 				this.transformer = new GMover(this.selectedShape);
 			} else if (this.selectedShape.getESelectedAnchor() == EAnchors.eRR) {
@@ -111,7 +115,11 @@ public class GDrawingPanel extends JPanel {
 				this.transformer = new GResizer(this.selectedShape);
 			}
 		} else {
-			this.transformer = new GDrawer(this.currentShape);
+			if(eShapeTool == EShapeTool.eText) {
+				this.transformer = new GTextDrawer((GText) this.currentShape);
+			}else {
+				this.transformer = new GDrawer(this.currentShape);
+			}
 		}
 		this.transformer.start((Graphics2D) getGraphics(), x, y);
 	}
@@ -162,15 +170,37 @@ public class GDrawingPanel extends JPanel {
 	}
 
 	private class MouseHandler implements MouseListener, MouseMotionListener {
-
+	    private final Timer singleClickTimer;
+	    private MouseEvent pendingEvent;
+	    public MouseHandler() {
+	        
+	        singleClickTimer = new Timer(200, e -> {
+	            mouse1Clicked(pendingEvent);
+	        });
+	        singleClickTimer.setRepeats(false);
+	    }
+	    @Override
+	    public void mouseClicked(MouseEvent e) {
+	        if (e.getClickCount() == 2) {
+	            // 더블클릭이 감지되면 단일 클릭 타이머 취소 후 바로 처리
+	            if (singleClickTimer.isRunning()) singleClickTimer.stop();
+	            mouse2Clicked(e);
+	        } else if (e.getClickCount() == 1) {
+	            // 단일 클릭은 타이머에 맡겨서 잠시 미룸
+	            pendingEvent = e;
+	            singleClickTimer.restart();
+	        }
+	    }
+	    /*
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			if (e.getClickCount() == 1) {
-				this.mouse1Clicked(e);
-			} else if (e.getClickCount() == 2) {
+			  if (e.getClickCount() == 2) {
 				this.mouse2Clicked(e);
+			}else if (e.getClickCount() == 1) {
+				this.mouse1Clicked(e);
 			}
 		}
+		*/
 
 		private void mouse1Clicked(MouseEvent e) {
 			if (eDrawingState == EDrawingState.eIdle) {
@@ -204,6 +234,11 @@ public class GDrawingPanel extends JPanel {
 			if (eDrawingState == EDrawingState.eNP) {
 				finishTransform(e.getX(), e.getY());
 				eDrawingState = EDrawingState.eIdle;
+				return;
+			}
+			if (eShapeTool == EShapeTool.eSelect && selectedShape instanceof shapes.GText) {
+				((shapes.GText) selectedShape).editText();
+				repaint();
 			}
 		}
 
@@ -227,7 +262,5 @@ public class GDrawingPanel extends JPanel {
 		public void mouseExited(MouseEvent e) {
 		}
 	}
-
-
 
 }
