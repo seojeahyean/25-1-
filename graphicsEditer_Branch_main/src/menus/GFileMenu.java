@@ -44,7 +44,7 @@ public class GFileMenu extends JMenu {
 	}
 
 	public void initialize() {
-		this.dir = new File("C:\\Users\\NAM\\전공 자료\\work\\패턴중심적사고와프로그래밍\\directory");
+		this.dir = new File("directory");
 		this.file = new File("newFile.shape");
 	}
 

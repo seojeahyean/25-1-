@@ -5,5 +5,28 @@
     <EFileMenuItem eNew="새로 만들기" eOpen="열기" eSave="저장" eSaveAs="다른 이름으로 저장" ePrint="프린트" eClose="닫기" eQuit="종료"/>
     <EEditMenuItem eUndo="되돌리기" eRedo="다시실행" eProperty="속성"/>
     <EGraphicMenuItem eLineThickness="선 두께" eLineStyle="선 스타일" eFontStyle="글꼴 스타일" eFontSize="글꼴 크기"/>
-    <GShapeToolBar eSelect="선택" eRectangle="사각형" eEllipse="타원" eLine="선" ePolygon="다각형" eText ="텍스트"/>
+    <GShapeToolBar eSelect="선택" eRectangle="사각형" eEllipse="타원" eLine="선" ePolygon="다각형" eText="텍스트"/>
+    
+    <ELoginDialog 
+        title="로그인"
+        idLabel="아이디:"
+        passwordLabel="비밀번호:"
+        loginButton="로그인"
+        signupButton="회원가입"
+        loginSuccess="로그인 성공"
+        loginFail="로그인 실패"/>
+    
+    <ESignupDialog 
+        title="회원가입"
+        nameLabel="이름:"
+        idLabel="아이디:"
+        passwordLabel="비밀번호:"
+        confirmPasswordLabel="비밀번호 확인:"
+        languageLabel="사용 언어:"
+        signupButton="가입하기"
+        cancelButton="취소"
+        signupSuccess="회원가입이 완료되었습니다"
+        signupFail="이미 존재하는 아이디입니다"
+        emptyField="모든 필드를 입력해주세요"
+        passwordMismatch="비밀번호가 일치하지 않습니다"/>
 </GConstants>

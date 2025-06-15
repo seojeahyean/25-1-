@@ -6,4 +6,29 @@
     <EEditMenuItem eUndo="元に戻す" eRedo="やり直し" eProperty="プロパティ"/>
     <EGraphicMenuItem eLineThickness="線の太さ" eLineStyle="線のスタイル" eFontStyle="フォントスタイル" eFontSize="フォントサイズ"/>
     <GShapeToolBar eSelect="選択" eRectangle="四角形" eEllipse="楕円" eLine="線" ePolygon="多角形" eText="テクスト"/>
+    
+    <!-- 로그인 다이얼로그 텍스트 -->
+    <ELoginDialog 
+        title="ログイン"
+        idLabel="ID:"
+        passwordLabel="パスワード:"
+        loginButton="ログイン"
+        signupButton="新規登録"
+        loginSuccess="ログイン成功"
+        loginFail="ログイン失敗"/>
+    
+    <!-- 회원가입 다이얼로그 텍스트 -->
+    <ESignupDialog 
+        title="新規登録"
+        nameLabel="名前:"
+        idLabel="ID:"
+        passwordLabel="パスワード:"
+        confirmPasswordLabel="パスワード確認:"
+        languageLabel="使用言語:"
+        signupButton="登録"
+        cancelButton="キャンセル"
+        signupSuccess="登録完了"
+        signupFail="IDが既に存在します"
+        emptyField="全ての項目を入力してください"
+        passwordMismatch="パスワードが一致しません"/>
 </GConstants>

@@ -207,7 +207,7 @@ public class GConstants {
             }
         }
     }
-
+//////////////////////////////////////////////////////////////////////
     public enum EEditMenuItem {
         eUndo("", "undo"),
         eRedo("", "redo"),
@@ -256,7 +256,7 @@ public class GConstants {
             }
         }
     }
-
+//////////////////////////////////////////////////////////////////////
     public enum EGraphicMenuItem {
         eLineThickness("", "lineThickness"),
         eLineStyle("", "lineStyle"),
@@ -360,7 +360,7 @@ public class GConstants {
     }
 	//////////////////////////////////////////////////////////////////////		
     public enum EDrawingPanel {
-        // 추후 확장 가능
+     
     }
 
 	//////////////////////////////////////////////////////////////////////
@@ -382,6 +382,77 @@ public class GConstants {
         }
         public Cursor getCursor() {
             return this.cursor;
+        }
+    }
+    //////////////////////////////////////////////////////////////////////
+    public enum ELoginDialog {
+        title(""),
+        idLabel(""),
+        passwordLabel(""),
+        loginButton(""),
+        signupButton(""),
+        loginSuccess(""),
+        loginFail("");
+    
+        private String text;
+    
+        private ELoginDialog(String text) {
+            this.text = text;
+        }
+    
+        public String getText() {
+            return this.text;
+        }
+    
+        public void setText(String text) {
+            this.text = text;
+        }
+    
+        public static void setValues(Node node) {
+            for(ELoginDialog eLoginDialog: ELoginDialog.values()) {
+                Node attribute = node.getAttributes().getNamedItem(eLoginDialog.name());
+                if (attribute != null) {
+                    eLoginDialog.setText(attribute.getNodeValue());
+                }
+            }
+        }
+    }
+    //////////////////////////////////////////////////////////////////////
+    public enum ESignupDialog {
+        title(""),
+        nameLabel(""),
+        idLabel(""),
+        passwordLabel(""),
+        confirmPasswordLabel(""),
+        languageLabel(""),
+        signupButton(""),
+        cancelButton(""),
+        signupSuccess(""),
+        signupFail(""),
+        emptyField(""),
+        passwordMismatch("");
+    
+        private String text;
+    
+        private ESignupDialog(String text) {
+            this.text = text;
+        }
+    
+        public String getText() {
+            return this.text;
+        }
+    
+        public void setText(String text) {
+            this.text = text;
+        }
+    
+        public static void setValues(Node node) {
+            for(ESignupDialog eSignupDialog: ESignupDialog.values()) {
+                Node attribute = node.getAttributes().getNamedItem(eSignupDialog.name());
+                if (attribute != null) {
+                    eSignupDialog.setText(attribute.getNodeValue());
+                }
+            }
         }
     }
 }

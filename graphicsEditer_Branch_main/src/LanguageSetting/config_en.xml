@@ -6,4 +6,27 @@
     <EEditMenuItem eUndo="Undo" eRedo="Redo" eProperty="Property"/>
     <EGraphicMenuItem eLineThickness="Line Thickness" eLineStyle="Line Style" eFontStyle="Font Style" eFontSize="Font Size"/>
     <GShapeToolBar eSelect="Select" eRectangle="Rectangle" eEllipse="Ellipse" eLine="Line" ePolygon="Polygon" eText="Text"/>
+    
+    <ELoginDialog 
+        title="Login"
+        idLabel="ID:"
+        passwordLabel="Password:"
+        loginButton="Login"
+        signupButton="Sign Up"
+        loginSuccess="Login Successful"
+        loginFail="Login Failed"/>
+    
+    <ESignupDialog 
+        title="Sign Up"
+        nameLabel="Name:"
+        idLabel="ID:"
+        passwordLabel="Password:"
+        confirmPasswordLabel="Confirm Password:"
+        languageLabel="Language:"
+        signupButton="Sign Up"
+        cancelButton="Cancel"
+        signupSuccess="Sign Up Completed"
+        signupFail="ID already exists"
+        emptyField="Please fill in all fields"
+        passwordMismatch="Passwords do not match"/>
 </GConstants>
