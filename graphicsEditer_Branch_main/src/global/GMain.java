@@ -6,9 +6,8 @@ public class GMain {
 	
 	public static void main(String[] args) {
 		//create aggregation hierarchy
-		GConstants constants = new GConstants();  // GConstants 초기화
+		GConstants constants = new GConstants();  
 		GMainFrame mainFrame = new GMainFrame();
-		//tree traverse (DFS)
 		mainFrame.initialize();
 		
 	}

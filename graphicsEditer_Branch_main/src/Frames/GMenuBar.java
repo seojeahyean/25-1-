@@ -22,6 +22,7 @@ public class GMenuBar extends JMenuBar {
     private GFileMenu fileMenu;
     private GEditMenu editMenu;
     private GGraphicMenu graphicMenu;
+    private GAccountMenu accountMenu;
     //associations
     private GDrawingPanel drawingPanel;
     
@@ -29,13 +30,12 @@ public class GMenuBar extends JMenuBar {
         this.fileMenu = new GFileMenu();
         this.editMenu = new GEditMenu();
         this.graphicMenu = new GGraphicMenu();
+        this.accountMenu = new GAccountMenu();
         
         this.add(this.fileMenu);
         this.add(this.editMenu);
         this.add(this.graphicMenu);
-        
-        GAccountMenu accountMenu = new GAccountMenu();
-        this.add(accountMenu);
+        this.add(this.accountMenu);
         
         this.setVisible(true);
     }
@@ -45,28 +45,21 @@ public class GMenuBar extends JMenuBar {
             this.fileMenu.associate(this.drawingPanel);
             this.editMenu.associate(this.drawingPanel);
             this.graphicMenu.associate(this.drawingPanel);
+            this.accountMenu.associate(this.drawingPanel);
             
             this.fileMenu.initialize();
             this.editMenu.initialize();
             this.graphicMenu.initialize();
             
             this.setVisible(true);
-        } else {
         }
     }
 
     public void associate(GDrawingPanel drawingPanel) {
         this.drawingPanel = drawingPanel;
-        for (int i = 0; i < this.getMenuCount(); i++) {
-            if (this.getMenu(i) instanceof GFileMenu) {
-                ((GFileMenu) this.getMenu(i)).associate(drawingPanel);
-            } else if (this.getMenu(i) instanceof GEditMenu) {
-                ((GEditMenu) this.getMenu(i)).associate(drawingPanel);
-            } else if (this.getMenu(i) instanceof GGraphicMenu) {
-                ((GGraphicMenu) this.getMenu(i)).associate(drawingPanel);
-            } else if (this.getMenu(i) instanceof GAccountMenu) {
-                ((GAccountMenu) this.getMenu(i)).associate(drawingPanel);
-            }
-        }
+        this.fileMenu.associate(drawingPanel);
+        this.editMenu.associate(drawingPanel);
+        this.graphicMenu.associate(drawingPanel);
+        this.accountMenu.associate(drawingPanel);
     }
 }
