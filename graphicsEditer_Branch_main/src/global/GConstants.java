@@ -81,6 +81,14 @@ public class GConstants {
                         // GDrawingPanel.setValues(node);
                     }else if(node.getNodeName().equals(GShapeToolBar.class.getSimpleName())){
                         EShapeTool.setValues(node);
+                    } else if(node.getNodeName().equals(ELoginDialog.class.getSimpleName())) {
+                        ELoginDialog.setValues(node);
+                    } else if(node.getNodeName().equals(ESignupDialog.class.getSimpleName())) {
+                        ESignupDialog.setValues(node);
+                    } else if(node.getNodeName().equals(EAccountMenuItem.class.getSimpleName())) {
+                        EAccountMenuItem.setValues(node);
+                    } else if(node.getNodeName().equals(EAccountDialog.class.getSimpleName())) {
+                        EAccountDialog.setValues(node);
                     }
 					//getSimpleName()을 사용하는 이유는 단지 "GMainFrame"으로 비교해도 되지만, 리펙토링 또는 오타 방지를 위해서 클래스의 이름을 정확하게 가져오기 위해 사용
                 }
@@ -122,7 +130,8 @@ public class GConstants {
     public enum EMenuBar {
         fileMenu(""),
         editMenu(""),
-        graphicsMenu("");
+        graphicsMenu(""),
+        accountMenu("");  // 계정 메뉴 추가
 
         private String label;
 
@@ -453,6 +462,162 @@ public class GConstants {
                     eSignupDialog.setText(attribute.getNodeValue());
                 }
             }
+        }
+    }
+
+    //////////////////////////////////////////////////////////////////////
+    public enum EErrorMessage {
+        initUserData(""),      // 사용자 데이터 파일 초기화 중 오류가 발생했습니다
+        loginProcess(""),      // 로그인 처리 중 오류가 발생했습니다
+        userInfoCheck(""),     // 사용자 정보 확인 중 오류가 발생했습니다
+        passwordCheck(""),     // 비밀번호 확인 중 오류가 발생했습니다
+        signupProcess(""),     // 회원가입 처리 중 오류가 발생했습니다
+        fileSave(""),         // 파일 저장 중 오류가 발생했습니다
+        errorTitle("");       // 오류
+    
+        private String text;
+    
+        private EErrorMessage(String text) {
+            this.text = text;
+        }
+    
+        public String getText() {
+            return this.text;
+        }
+    
+        public void setText(String text) {
+            this.text = text;
+        }
+    
+        public static void setValues(Node node) {
+            for(EErrorMessage eErrorMessage: EErrorMessage.values()) {
+                Node attribute = node.getAttributes().getNamedItem(eErrorMessage.name());
+                if (attribute != null) {
+                    eErrorMessage.setText(attribute.getNodeValue());
+                }
+            }
+        }
+    }
+
+    //////////////////////////////////////////////////////////////////////
+    public enum EAccountMenuItem {
+        changeLanguage("", "changeLanguage"),  // 언어 변경
+        changeName("", "changeName"),         // 이름 변경
+        changePassword("", "changePassword"), // 비밀번호 변경
+        logout("", "logout");                 // 로그아웃
+
+        private String name;
+        private final String methodName;
+        private String toolTipText;
+
+        private EAccountMenuItem(String name, String methodName) {
+            this.name = name;
+            this.methodName = methodName;
+            this.toolTipText = "";
+        }
+
+        public String getName() {
+            return this.name;
+        }
+
+        public String getMethodName() {
+            return this.methodName;
+        }
+
+        public String getToolTipText() {
+            return this.toolTipText;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public void setToolTipText(String toolTipText) {
+            this.toolTipText = toolTipText;
+        }
+
+        public static void setValues(Node node) {
+            for(EAccountMenuItem eMenuItem: EAccountMenuItem.values()) {
+                Node attribute = node.getAttributes().getNamedItem(eMenuItem.name());
+                if (attribute != null) {
+                    eMenuItem.setName(attribute.getNodeValue());
+                }
+                Node toolTipNode = node.getAttributes().getNamedItem("toolTipText");
+                if (toolTipNode != null) {
+                    eMenuItem.setToolTipText(toolTipNode.getNodeValue());
+                }
+            }
+        }
+    }
+
+    //////////////////////////////////////////////////////////////////////
+    public enum EAccountDialog {
+        // Dialog titles
+        title_changeLanguage("Change Language"),
+        title_changeName("Change Name"),
+        title_changePassword("Change Password"),
+        title_logout("Logout"),
+        successTitle("Success"),
+        failTitle("Error"),
+
+        // Labels
+        languageLabel("Language:"),
+        nameLabel("New Name:"),
+        currentPasswordLabel("Current Password:"),
+        newPasswordLabel("New Password:"),
+        confirm("Confirm"),
+
+        // Messages
+        languageChangeSuccess("Language changed successfully"),
+        languageChangeFail("Failed to change language"),
+        nameChangeSuccess("Name changed successfully"),
+        nameChangeFail("Failed to change name"),
+        passwordChangeSuccess("Password changed successfully"),
+        passwordChangeFail("Failed to change password"),
+        nameEmpty("Please enter a new name"),
+        passwordEmpty("Please fill in all password fields"),
+        logoutConfirm("Are you sure you want to logout?");
+
+        private String text;
+
+        EAccountDialog(String text) {
+            this.text = text;
+        }
+
+        public String getText() {
+            return text;
+        }
+
+        public static void setValues(Node node) {
+            for(EAccountDialog dialog: EAccountDialog.values()) {
+                Node attribute = node.getAttributes().getNamedItem(dialog.name());
+                if (attribute != null) {
+                    dialog.text = attribute.getNodeValue();
+                }
+            }
+        }
+    }
+
+    public static String getText(EAccountDialog dialog) {
+        return dialog.getText();
+    }
+
+    private static final String USER_DATA_FILE = "loginInfo/users.xml";
+
+    public enum EUser {
+        id("id"),
+        password("password"),
+        name("name"),
+        language("language");
+
+        private String tagName;
+
+        EUser(String tagName) {
+            this.tagName = tagName;
+        }
+
+        public String getTagName() {
+            return tagName;
         }
     }
 }

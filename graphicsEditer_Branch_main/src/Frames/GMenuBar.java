@@ -1,10 +1,19 @@
 package Frames;
 
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import menus.GFileMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+
+import global.GConstants.EAccountMenuItem;
+import global.GConstants.EEditMenuItem;
+import global.GConstants.EFileMenuItem;
+import global.GConstants.EGraphicMenuItem;
+import global.GConstants.EMenuBar;
+import menus.GAccountMenu;
 import menus.GEditMenu;
+import menus.GFileMenu;
 import menus.GGraphicMenu;
 
 public class GMenuBar extends JMenuBar {
@@ -24,6 +33,9 @@ public class GMenuBar extends JMenuBar {
         this.add(this.fileMenu);
         this.add(this.editMenu);
         this.add(this.graphicMenu);
+        
+        GAccountMenu accountMenu = new GAccountMenu();
+        this.add(accountMenu);
         
         this.setVisible(true);
     }
@@ -45,5 +57,16 @@ public class GMenuBar extends JMenuBar {
 
     public void associate(GDrawingPanel drawingPanel) {
         this.drawingPanel = drawingPanel;
+        for (int i = 0; i < this.getMenuCount(); i++) {
+            if (this.getMenu(i) instanceof GFileMenu) {
+                ((GFileMenu) this.getMenu(i)).associate(drawingPanel);
+            } else if (this.getMenu(i) instanceof GEditMenu) {
+                ((GEditMenu) this.getMenu(i)).associate(drawingPanel);
+            } else if (this.getMenu(i) instanceof GGraphicMenu) {
+                ((GGraphicMenu) this.getMenu(i)).associate(drawingPanel);
+            } else if (this.getMenu(i) instanceof GAccountMenu) {
+                ((GAccountMenu) this.getMenu(i)).associate(drawingPanel);
+            }
+        }
     }
 }

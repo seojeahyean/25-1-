@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GConstants>
     <GMainFrame eX="200" eY="100" eW="1000" eH="1000"/>
-    <GMenuBar fileMenu="ファイル" editMenu="編集" graphicsMenu="グラフィック"/>
+    <GMenuBar fileMenu="ファイル" editMenu="編集" graphicsMenu="グラフィック" accountMenu="アカウント"/>
     <EFileMenuItem eNew="新規" eOpen="開く" eSave="保存" eSaveAs="名前を付けて保存" ePrint="印刷" eClose="閉じる" eQuit="終了"/>
     <EEditMenuItem eUndo="元に戻す" eRedo="やり直し" eProperty="プロパティ"/>
     <EGraphicMenuItem eLineThickness="線の太さ" eLineStyle="線のスタイル" eFontStyle="フォントスタイル" eFontSize="フォントサイズ"/>
@@ -30,5 +30,33 @@
         signupSuccess="登録完了"
         signupFail="IDが既に存在します"
         emptyField="全ての項目を入力してください"
+        passwordMismatch="パスワードが一致しません"/>
+
+    <EErrorMessage
+        initUserData="ユーザーデータファイルの初期化中にエラーが発生しました"
+        loginProcess="ログイン処理中にエラーが発生しました"
+        userInfoCheck="ユーザー情報確認中にエラーが発生しました"
+        passwordCheck="パスワード確認中にエラーが発生しました"
+        signupProcess="新規登録処理中にエラーが発生しました"
+        fileSave="ファイル保存中にエラーが発生しました"
+        errorTitle="エラー"/>
+
+    <EAccountMenuItem
+        changeLanguage="言語変更"
+        changeName="名前変更"
+        changePassword="パスワード変更"
+        logout="ログアウト"/>
+
+    <EAccountDialog
+        changeLanguageTitle="言語変更"
+        changeNameTitle="名前変更"
+        changePasswordTitle="パスワード変更"
+        currentPassword="現在のパスワード:"
+        newPassword="新しいパスワード:"
+        confirmNewPassword="新しいパスワード確認:"
+        changeButton="変更"
+        cancelButton="キャンセル"
+        success="変更が完了しました"
+        fail="変更に失敗しました"
         passwordMismatch="パスワードが一致しません"/>
 </GConstants>

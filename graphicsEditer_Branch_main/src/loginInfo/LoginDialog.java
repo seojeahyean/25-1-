@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import global.GConstants.ELoginDialog;
+import global.GConstants;
 
 public class LoginDialog extends JDialog {
     private JTextField idField;
@@ -15,7 +16,7 @@ public class LoginDialog extends JDialog {
 
     public LoginDialog(Frame parent) {
         super(parent, ELoginDialog.title.getText(), true);  // "로그인" - 로그인 창 제목
-        userManager = new UserManager();
+        userManager = UserManager.getInstance();  // 싱글톤 인스턴스 사용
         initComponents();
         setLocationRelativeTo(parent);
     }
@@ -58,14 +59,23 @@ public class LoginDialog extends JDialog {
             String password = new String(passwordField.getPassword());
             
             if (userManager.checkUserData(id, password)) {
+                userManager.login(id);  // 로그인 성공 시 현재 사용자 ID 설정
+                
+                // 사용자의 언어 설정 불러오기
+                String userLanguage = userManager.getUserLanguage(id);
+                if (userLanguage != null) {
+                    GConstants gConstants = new GConstants();
+                    gConstants.setLanguage(userLanguage);
+                }
+                
                 JOptionPane.showMessageDialog(LoginDialog.this, 
-                    ELoginDialog.loginSuccess.getText());  // "로그인 성공" - 로그인 성공 메시지
-                loginSuccess = true;  // 로그인 성공 시 플래그 설정
+                    ELoginDialog.loginSuccess.getText());
+                loginSuccess = true;
                 dispose();
             } else {
                 JOptionPane.showMessageDialog(LoginDialog.this, 
-                    ELoginDialog.loginFail.getText());  // "아이디 또는 비밀번호가 올바르지 않습니다." - 로그인 실패 메시지
-                loginSuccess = false;  // 로그인 실패 시 플래그 설정
+                    ELoginDialog.loginFail.getText());
+                loginSuccess = false;
             }
         }
     }

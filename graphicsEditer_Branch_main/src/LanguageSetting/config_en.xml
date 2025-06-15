@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GConstants>
     <GMainFrame eX="200" eY="100" eW="1000" eH="1000"/>
-    <GMenuBar fileMenu="File" editMenu="Edit" graphicsMenu="Graphics"/>
+    <GMenuBar fileMenu="File" editMenu="Edit" graphicsMenu="Graphics" accountMenu="Account"/>
     <EFileMenuItem eNew="New" eOpen="Open" eSave="Save" eSaveAs="Save As" ePrint="Print" eClose="Close" eQuit="Quit"/>
     <EEditMenuItem eUndo="Undo" eRedo="Redo" eProperty="Property"/>
     <EGraphicMenuItem eLineThickness="Line Thickness" eLineStyle="Line Style" eFontStyle="Font Style" eFontSize="Font Size"/>
@@ -28,5 +28,33 @@
         signupSuccess="Sign Up Completed"
         signupFail="ID already exists"
         emptyField="Please fill in all fields"
+        passwordMismatch="Passwords do not match"/>
+
+    <EErrorMessage
+        initUserData="Error occurred while initializing user data file"
+        loginProcess="Error occurred during login process"
+        userInfoCheck="Error occurred while checking user information"
+        passwordCheck="Error occurred while checking password"
+        signupProcess="Error occurred during signup process"
+        fileSave="Error occurred while saving file"
+        errorTitle="Error"/>
+
+    <EAccountMenuItem
+        changeLanguage="Change Language"
+        changeName="Change Name"
+        changePassword="Change Password"
+        logout="Logout"/>
+
+    <EAccountDialog
+        changeLanguageTitle="Change Language"
+        changeNameTitle="Change Name"
+        changePasswordTitle="Change Password"
+        currentPassword="Current Password:"
+        newPassword="New Password:"
+        confirmNewPassword="Confirm New Password:"
+        changeButton="Change"
+        cancelButton="Cancel"
+        success="Change completed successfully"
+        fail="Change failed"
         passwordMismatch="Passwords do not match"/>
 </GConstants>
