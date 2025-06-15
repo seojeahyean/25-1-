@@ -23,6 +23,8 @@ import Frames.GDrawingPanel;
 import global.GConstants.EFileMenuItem;
 import global.GConstants.EMenuBar;
 import shapes.GShape;
+import global.GConstants.EFileConstants;
+import global.GConstants.EFileDialog;
 
 public class GFileMenu extends JMenu {
 	private static final long serialVersionUID = 1L;
@@ -33,19 +35,21 @@ public class GFileMenu extends JMenu {
 
 	public GFileMenu() {
 		super(EMenuBar.fileMenu.getLabel());
-
 		ActionHandler actionHandler = new ActionHandler();
-		for (EFileMenuItem eMenuItem : EFileMenuItem.values()) {
+		for (EFileMenuItem eMenuItem: EFileMenuItem.values()) {
 			JMenuItem menuItem = new JMenuItem(eMenuItem.getName());
-			menuItem.setActionCommand(eMenuItem.name());
+			menuItem.setActionCommand(eMenuItem.getMethodName());
 			menuItem.addActionListener(actionHandler);
+			menuItem.setToolTipText(eMenuItem.getToolTipText());
 			this.add(menuItem);
 		}
+		this.dir = new File(EFileConstants.defaultDirectory.getValue());
+		this.file = new File(EFileConstants.defaultFileName.getValue());
 	}
 
 	public void initialize() {
-		this.dir = new File("directory");
-		this.file = new File("newFile.shape");
+		this.dir = new File(EFileConstants.defaultDirectory.getValue());
+		this.file = new File(EFileConstants.defaultFileName.getValue());
 	}
 
 	public void associate(GDrawingPanel drawingPanel) {
@@ -63,8 +67,10 @@ public class GFileMenu extends JMenu {
 	public boolean close() {
 		boolean bCancel = false;
 		if (this.drawingPanel.isUpdated()) {
-			int reply = JOptionPane.NO_OPTION;
-			reply = JOptionPane.showConfirmDialog(this.drawingPanel, "변경내용을 저장 할까요?");
+			int reply = JOptionPane.showConfirmDialog(
+				this.drawingPanel, 
+				EFileDialog.saveConfirm.getText()
+			);
 			if (reply == JOptionPane.CANCEL_OPTION) {
 				bCancel = true;
 			} else if (reply == JOptionPane.OK_OPTION) {
@@ -75,11 +81,13 @@ public class GFileMenu extends JMenu {
 	}
 
 	public void open() {
-
 		System.out.println("open");
 		JFileChooser fileChooser = new JFileChooser();
-		fileChooser.setDialogTitle("파일 열기");
-		fileChooser.setFileFilter(new FileNameExtensionFilter("Shape 파일 (*.shape)", "shape"));
+		fileChooser.setDialogTitle(EFileDialog.openFileTitle.getText());
+		fileChooser.setFileFilter(new FileNameExtensionFilter(
+			EFileConstants.fileDescription.getValue(), 
+			EFileConstants.fileExtension.getValue()
+		));
 
 		int result = fileChooser.showOpenDialog(this);
 		if (result == JFileChooser.APPROVE_OPTION) {
@@ -94,8 +102,12 @@ public class GFileMenu extends JMenu {
 				objectInputStream.close();
 				fileInputStream.close();
 			} catch (IOException | ClassNotFoundException e) {
-				JOptionPane.showMessageDialog(this, "파일을 읽을 수 없습니다: " + e.getMessage(), "열기 오류",
-						JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(
+					this, 
+					EFileDialog.fileReadError.getText() + e.getMessage(), 
+					EFileDialog.openErrorTitle.getText(),
+					JOptionPane.ERROR_MESSAGE
+				);
 				e.printStackTrace();
 			}
 		}
@@ -108,11 +120,6 @@ public class GFileMenu extends JMenu {
 		}else {
 			if(!this.saveAs()) {
 				try {
-					/*
-					 * FileOutputStream fileOutputStream = new FileOutputStream("file");
-					 * ObjectOutputStream objectOutputStream = new
-					 * ObjectOutputStream(fileOutputStream);
-					 */
 					FileOutputStream fileOutputStream = new FileOutputStream(this.file);
 					BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
 					ObjectOutputStream objectOutputStream = new ObjectOutputStream(bufferedOutputStream);
@@ -121,6 +128,12 @@ public class GFileMenu extends JMenu {
 					objectOutputStream.close();
 					this.drawingPanel.setBUpdated(false);
 				} catch (IOException e) {
+					JOptionPane.showMessageDialog(
+						this, 
+						EFileDialog.saveError.getText() + e.getMessage(), 
+						EFileDialog.saveErrorTitle.getText(),
+						JOptionPane.ERROR_MESSAGE
+					);
 					e.printStackTrace();
 				}
 			}
@@ -132,47 +145,24 @@ public class GFileMenu extends JMenu {
 		boolean bCancel = false;
 		JFileChooser chooser = new JFileChooser(this.dir);
 		chooser.setSelectedFile(this.file);
-		FileNameExtensionFilter filter = new FileNameExtensionFilter("Graphics Data","shape");
+		FileNameExtensionFilter filter = new FileNameExtensionFilter(
+			EFileConstants.fileDescription.getValue(),
+			EFileConstants.fileExtension.getValue()
+		);
 		chooser.setFileFilter(filter);
-		int returnVal = chooser.showSaveDialog(this.drawingPanel);
-		if(returnVal==JFileChooser.APPROVE_OPTION) {
-			this.dir = chooser.getCurrentDirectory();
+		int result = chooser.showSaveDialog(this);
+		if (result == JFileChooser.APPROVE_OPTION) {
 			this.file = chooser.getSelectedFile();
-		}else {
+			if (!this.file.getName().endsWith(EFileConstants.fileExtension.getValue())) {
+				this.file = new File(this.file.getAbsolutePath() + "." + EFileConstants.fileExtension.getValue());
+			}
+			this.dir = this.file.getParentFile();
+			this.save();
+		} else if (result == JFileChooser.CANCEL_OPTION) {
 			bCancel = true;
 		}
 		return bCancel;
 	}
-//		JFileChooser chooser = new JFileChooser(this.dir);
-//		chooser.setDialogTitle("다른 이름으로 저장");
-//
-//		// 파일 필터 설정 (확장자가 .shape인 파일만 저장 가능)
-//		FileNameExtensionFilter filter = new FileNameExtensionFilter("Shape 파일 (*.shape)", "shape");
-//		chooser.setFileFilter(filter);
-//
-//		int result = chooser.showSaveDialog(this);
-//		if (result == JFileChooser.APPROVE_OPTION) {
-//			try {
-//				String filePath = chooser.getSelectedFile().getAbsolutePath();
-//				// 확장자가 없는 경우 .shape 확장자 붙이기
-//				if (!filePath.toLowerCase().endsWith(".shape")) {
-//					filePath += ".shape";
-//				}
-//
-//				FileOutputStream fileOutputStream = new FileOutputStream(filePath);
-//				BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
-//				ObjectOutputStream objectOutputStream = new ObjectOutputStream(bufferedOutputStream);
-//
-//				objectOutputStream.writeObject(this.drawingPanel.getShapes());
-//				objectOutputStream.close();
-//
-//			} catch (IOException e) {
-//				JOptionPane.showMessageDialog(this, "파일 저장 중 오류가 발생했습니다: " + e.getMessage(), "저장 오류",
-//						JOptionPane.ERROR_MESSAGE);
-//				e.printStackTrace();
-//			}
-//		}
-//	}
 
 	public void print() {
 		System.out.println("print");

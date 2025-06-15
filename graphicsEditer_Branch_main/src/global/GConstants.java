@@ -131,7 +131,7 @@ public class GConstants {
         fileMenu(""),
         editMenu(""),
         graphicsMenu(""),
-        accountMenu("");  // 계정 메뉴 추가
+        accountMenu("");
 
         private String label;
 
@@ -618,6 +618,56 @@ public class GConstants {
 
         public String getTagName() {
             return tagName;
+        }
+    }
+
+    public enum EFileConstants {
+        // File system constants (should not be translated)
+        defaultDirectory("directory"),
+        defaultFileName("newFile.shape"),
+        fileExtension("shape"),
+        fileDescription("Graphics Data");
+        
+        private final String value;
+        
+        EFileConstants(String value) {
+            this.value = value;
+        }
+        
+        public String getValue() {
+            return this.value;
+        }
+    }
+
+    public enum EFileDialog {
+        saveConfirm(""),
+        openFileTitle(""),
+        fileReadError(""),
+        openErrorTitle(""),
+        saveErrorTitle(""),
+        saveError("");
+
+        private String text;
+
+        private EFileDialog(String text) {
+            this.text = text;
+        }
+
+        public String getText() {
+            return this.text;
+        }
+
+        public void setText(String text) {
+            this.text = text;
+        }
+
+        public static void setValues(Node node) {
+            for(EFileDialog dialog: EFileDialog.values()) {
+                Node attribute = node.getAttributes().getNamedItem(dialog.name());
+                if (attribute != null) {
+                    dialog.setText(attribute.getNodeValue());
+                }
+            }
         }
     }
 }
