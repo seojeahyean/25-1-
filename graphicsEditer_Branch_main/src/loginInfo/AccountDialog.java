@@ -17,7 +17,7 @@ public class AccountDialog extends JDialog {
     private UserManager userManager;
     private String command;
 
-    public AccountDialog(Frame owner, String command) {
+    public AccountDialog(Frame owner, String command) {// 입력폼이 복잡하기 때문에 별도의 클래스로 분리
         super(owner, true);
         this.command = command;
         this.userManager = UserManager.getInstance();
@@ -117,16 +117,16 @@ public class AccountDialog extends JDialog {
         System.out.println("=== Language Change Dialog Debug ===");
         System.out.println("Selected language from combo box: " + selectedLanguage);
         
-        // 언어 코드로 변환
+     
         String languageCode;
         switch (selectedLanguage) {
-            case "한국어":
+            case "��援���":
                 languageCode = "kr";
                 break;
             case "English":
                 languageCode = "en";
                 break;
-            case "日本語":
+            case "�ζ�ц�":
                 languageCode = "jp";
                 break;
             default:
@@ -134,11 +134,11 @@ public class AccountDialog extends JDialog {
         }
         System.out.println("Converted language code: " + languageCode);
         
-        // GConstants의 언어 설정 먼저 변경
+
         GConstants gConstants = new GConstants();
         gConstants.setLanguage(languageCode);
         
-        // UserManager를 통해 XML 파일 업데이트
+    
         if (userManager.changeLanguage(languageCode)) {
             System.out.println("Language change successful in UserManager");
             JOptionPane.showMessageDialog(this,
@@ -217,13 +217,13 @@ public class AccountDialog extends JDialog {
             userManager.logout();
             dispose();
             
-            // 메인 프레임 찾기
+        
             Window window = SwingUtilities.getWindowAncestor(this);
             if (window != null) {
                 window.dispose();
             }
             
-            // 새로운 메인 프레임 생성
+         
             GMainFrame mainFrame = new GMainFrame();
             mainFrame.initialize();
         }
@@ -232,7 +232,7 @@ public class AccountDialog extends JDialog {
     private void restartApplication() {
         System.out.println("Restarting application...");
         try {
-            // 현재 JVM 종료 전에 새로운 프로세스 시작
+   
             String javaBin = System.getProperty("java.home") + File.separator + "bin" + File.separator + "java";
             String classpath = System.getProperty("java.class.path");
             String className = "Frames.GMainFrame";
@@ -240,7 +240,7 @@ public class AccountDialog extends JDialog {
             ProcessBuilder builder = new ProcessBuilder(javaBin, "-cp", classpath, className);
             builder.start();
             
-            // 잠시 대기 후 현재 JVM 종료
+     
             Thread.sleep(1000);
             System.exit(0);
         } catch (Exception e) {

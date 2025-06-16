@@ -36,8 +36,8 @@ public class GAccountMenu extends JMenu {
         @Override
         public void actionPerformed(ActionEvent e) {
             String command = e.getActionCommand();
-            // Get the parent frame from the drawing panel
-            Frame owner = (Frame) SwingUtilities.getWindowAncestor(drawingPanel);
+           
+            Frame owner = (Frame) SwingUtilities.getWindowAncestor(drawingPanel);// 언어 변환을 위한 어쩔수 없는 코드
             AccountDialog accountDialog = new AccountDialog(owner, command);
             accountDialog.setVisible(true);
         }
